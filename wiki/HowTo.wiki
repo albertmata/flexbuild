@@ -25,3 +25,5 @@ FlexSdkPath => Path to the flex sdk home. (Note, I had to copy the full framewor
 OutputFile => Path to the final swf files (all swcs are compiled in their respective project bin folders)
 
 MetadataCreator, MetadataDescription, MetadataPublisher, MetadataTitle => Info embedded in the swf and swc files.
+
+Note: This has only been tested on my flex project, not guaranteed to work on all projects.
