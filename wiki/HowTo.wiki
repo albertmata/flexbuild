@@ -1,0 +1,33 @@
+#summary One-sentence summary of this page.
+#labels Phase-Deploy
+
+= Introduction =
+
+How to Use this custom task from a MsBuild project file.
+
+= Details =
+
+Copy the dll to your custom tasks directory (usually Program Files/MsBuild).
+
+Insert this line to import the custom task:
+<UsingTask AssemblyFile="C:\Program Files\MsBuild\FlexTask.dll" TaskName="BuildTask.Flex.FlexBuild" />
+
+And to call the task:
+<FlexBuild WorkSpacePath="$(FlexWorkspace)" Configuration="Release" JavaHome="C:\Program Files\Java\jre1.6.0_07" FlexSdkPath="C:\Flex3SDK" MetadataCreator="$(Creator)" MetadataDescription="$(Description)" MetadataPublisher="$(Publisher)" MetadataTitle="$(Title)"/>
+
+[Required]
+WorkspacePath => Path to the eclipse workspace that hold your flex project.
+
+[Required]
+Configuration => Debug or Release
+
+[Required]
+JavaHome => Path to the latest java runtime home
+
+[Required]
+FlexSdkPath => Path to the flex sdk home. (Note, I had to copy the full framework to a folder without spaces,the compc tool failed in some circumstances with "Flex Builder 3 Plugin" folder.
+
+[Optional]
+OutputFile => Path to the final swf files (all swcs are compiled in their respective project bin folders)
+
+MetadataCreator, MetadataDescription, MetadataPublisher, MetadataTitle => Info embedded in the swf and swc files.
