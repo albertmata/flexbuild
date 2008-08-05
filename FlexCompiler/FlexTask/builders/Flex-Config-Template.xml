@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<flex-config>
+
+  <output></output>
+  
+  <include-class>
+    <class></class>
+  </include-class>
+
+  <include-file>
+    <name></name>
+    <path></path>
+  </include-file>
+  
+  <compiler>
+
+    <source-path>
+      <path-element></path-element>
+    </source-path>
+
+    <debug>false</debug>
+                                                           
+    <external-library-path>
+      <path-element></path-element>
+    </external-library-path>
+
+    <library-path>
+      <path-element></path-element>
+    </library-path>
+    
+    <optimize>true</optimize>
+
+  </compiler>
+
+  <target-player>9.0.0</target-player>
+
+  <metadata>
+    <title>Adobe Flex 3 Application</title>
+    <description>http://www.adobe.com/products/flex</description>
+    <publisher>Imaxel</publisher>
+    <creator>Imaxel</creator>
+    <date></date>
+  </metadata>
+  
+</flex-config>

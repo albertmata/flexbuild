@@ -1,0 +1,21 @@
+C:\Documents and Settings\Albert\Mis documentos\Visual Studio 2005\Projects\FlexCompiler\TestTask\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Albert\Mis documentos\Visual Studio 2005\Projects\FlexCompiler\TestTask\bin\Debug\TestTask.exe
+C:\Documents and Settings\Albert\Mis documentos\Visual Studio 2005\Projects\FlexCompiler\TestTask\bin\Debug\TestTask.pdb
+C:\Documents and Settings\Albert\Mis documentos\Visual Studio 2005\Projects\FlexCompiler\TestTask\bin\Debug\FlexTask.dll
+C:\Documents and Settings\Albert\Mis documentos\Visual Studio 2005\Projects\FlexCompiler\TestTask\bin\Debug\FlexTask.pdb
+C:\Documents and Settings\Albert\Mis documentos\Visual Studio 2005\Projects\FlexCompiler\TestTask\obj\Debug\TestTask.exe
+C:\Documents and Settings\Albert\Mis documentos\Visual Studio 2005\Projects\FlexCompiler\TestTask\obj\Debug\TestTask.pdb
+D:\@Work\Work2005\FlexCompiler\TestTask\obj\Debug\TestTask.exe
+D:\@Work\Work2005\FlexCompiler\TestTask\obj\Debug\TestTask.pdb
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Debug\TestTask.exe
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Debug\TestTask.pdb
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Debug\FlexTask.dll
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Debug\FlexTask.pdb
+D:\@Work\Work2005\FlexCompiler\TestTask\obj\Debug\ResolveAssemblyReference.cache
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Release\TestTask.exe
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Release\TestTask.pdb
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Release\FlexTask.dll
+D:\@Work\Work2005\FlexCompiler\TestTask\bin\Release\FlexTask.pdb
+D:\@Work\Work2005\FlexCompiler\TestTask\obj\Release\ResolveAssemblyReference.cache
+D:\@Work\Work2005\FlexCompiler\TestTask\obj\Release\TestTask.exe
+D:\@Work\Work2005\FlexCompiler\TestTask\obj\Release\TestTask.pdb
