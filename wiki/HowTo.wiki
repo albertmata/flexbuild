@@ -1,11 +1,5 @@
-#summary One-sentence summary of this page.
+#summary How to Use this custom task from a MsBuild project file.
 #labels Phase-Deploy
-
-= Introduction =
-
-How to Use this custom task from a MsBuild project file.
-
-= Details =
 
 Copy the dll to your custom tasks directory (usually Program Files/MsBuild).
 
