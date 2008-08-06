@@ -50,6 +50,7 @@ namespace BuildTask.Flex
                             else
                             {
                                 Log.LogError(p.StandardError.ReadToEnd());
+                                return false;
                             }
                         }
                     }
