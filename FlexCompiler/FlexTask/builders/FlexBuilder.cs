@@ -29,7 +29,7 @@ namespace BuildTask.Flex.builders
 
                 //Hack: El proyecto de flex tiene por defecto el ouputfolder a bin-debug, pero nosotros queremos que si estamos en release
                 //nos lo ponga a bin-release
-                if (outputFile.Contains("bin-debug"))
+                if (!debug && outputFile.Contains("bin-debug"))
                 {
                     outputFile = outputFile.Replace("bin-debug", "bin-release");
                 }
