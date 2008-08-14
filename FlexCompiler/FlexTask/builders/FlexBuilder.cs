@@ -26,7 +26,15 @@ namespace BuildTask.Flex.builders
             if (string.IsNullOrEmpty(outputFile))
             {
                 outputFile = project.ProjectOutputFile;
+
+                //Hack: El proyecto de flex tiene por defecto el ouputfolder a bin-debug, pero nosotros queremos que si estamos en release
+                //nos lo ponga a bin-release
+                if (outputFile.Contains("bin-debug"))
+                {
+                    outputFile = outputFile.Replace("bin-debug", "bin-release");
+                }
             }
+            
             cfgBuilder.BuildConfigFile(pathToXmlConfigFile,flexLibProp, actionScriptProperties, metadata, debug, outputFile);
 
             string pathToMainApp = FlexUtil.NormalizePath(Path.Combine(project.ProjectPath, actionScriptProperties.MainApplication));

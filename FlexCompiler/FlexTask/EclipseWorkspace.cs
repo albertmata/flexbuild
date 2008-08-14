@@ -66,6 +66,20 @@ namespace BuildTask.Flex
                 project.LoadDependencies(this);
                 project.LoadProperties(this);
             }
+
+            if (null == mainProject)
+            {
+                //Search for ActionScriptProjects
+                foreach (EclipseFlexProject project in this.projects)
+                {
+                    //En principio solo hay uno
+                    if ((project.ProjectType == FlexProjectType.ActionScriptLibraryProject) && (null == mainProject))
+                    {
+                        mainProject = project;
+                        break;
+                    }
+                }
+            }
         }
 
         public EclipseFlexProject GetProjectByName(string name)
@@ -80,7 +94,14 @@ namespace BuildTask.Flex
             if (null == mainProject)
                 throw new InvalidOperationException("There is no root project");
 
-            return ProjectOrderBuilder.BuildProjectOrder(mainProject);
+            EclipseFlexProject[] orderedProjects = ProjectOrderBuilder.BuildProjectOrder(mainProject);
+            
+            //No estan todos los proyectos en la lista? Vamos a añadirlos todos
+            if (orderedProjects.Length != projects.Count)
+            {
+                return projects.ToArray();
+            }
+            return orderedProjects;
         }
     }
 }

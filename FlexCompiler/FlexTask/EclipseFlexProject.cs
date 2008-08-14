@@ -69,7 +69,7 @@ namespace BuildTask.Flex
         {
             get
             {
-                if (ProjectType == FlexProjectType.FlexProject)
+                if (ProjectType == FlexProjectType.FlexProject || ProjectType == FlexProjectType.ActionScriptLibraryProject)
                 {
                     return "swf";
                 }

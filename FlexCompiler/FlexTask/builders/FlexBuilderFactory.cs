@@ -8,7 +8,7 @@ namespace BuildTask.Flex.builders
     {
         public static IBuild GetBuilderFromProject(EclipseFlexProject project)
         {
-            if (project.ProjectType == FlexProjectType.FlexProject)
+            if (project.ProjectType == FlexProjectType.FlexProject || project.ProjectType == FlexProjectType.ActionScriptLibraryProject)
             {
                 return new FlexBuilder();
             }
