@@ -11,7 +11,7 @@ namespace BuildTask.Flex.builders
 {
     public class FlexLibraryBuilder : IBuild
     {
-        public Process Build(EclipseFlexProject project, SwfMetaData metadata, bool debug, string outputFile)
+        public Process Build(EclipseFlexProject project, SwfMetaData metadata, bool debug, string outputFile, out string finalOutputFile)
         {
             FlexLibProperties flexLibProp = project.FlexProperties as FlexLibProperties;
             ActionScriptProperties actionScriptProperties = project.ActionScriptProperties;
@@ -26,6 +26,7 @@ namespace BuildTask.Flex.builders
             //In libraries, ignore outputFile
             FlexConfigBuilder cfgBuilder = new FlexConfigBuilder();
             cfgBuilder.BuildConfigFile(pathToXmlConfigFile, flexLibProp, actionScriptProperties, metadata, debug, project.ProjectOutputFile);
+            finalOutputFile = project.ProjectOutputFile;
 
             string finalArgs = string.Format("-Xmx384m -Dsun.io.useCanonCaches=false -jar \"{0}/lib/compc.jar\" +flexlib=\"{0}/frameworks\" -load-config+=\"{1}\" {2}",
                 FlexGlobals.FlexSdkPath, pathToXmlConfigFile, actionScriptProperties.AdditionalCompilerArguments);

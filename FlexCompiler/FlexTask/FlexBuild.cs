@@ -30,6 +30,10 @@ namespace BuildTask.Flex
                 metadata.description = MetadataDescription;
                 metadata.publisher = MetadataPublisher;
                 metadata.title = MetadataTitle;
+                
+                string finalOutput;
+                List<string> outputedFileList = new List<string>();
+
                 for (int i = 0; i < orderedProjects.Length; i++)
                 {
                     EclipseFlexProject project = orderedProjects[i];
@@ -37,9 +41,10 @@ namespace BuildTask.Flex
                     IBuild flexBuilder = FlexBuilderFactory.GetBuilderFromProject(project);
                     Log.LogMessage(MessageImportance.Normal, "Building project {0} to {1}", project.ProjectName, project.ProjectOutputPath);
 
-                    using (Process p = flexBuilder.Build(project, metadata, Configurations.Debug == configuration, OutputFile))
+                    using (Process p = flexBuilder.Build(project, metadata, Configurations.Debug == configuration, OutputFile, out finalOutput))
                     {
                         p.WaitForExit(FlexGlobals.CompileTimeout);
+                        outputedFileList.Add(finalOutput);
                         Log.LogCommandLine(MessageImportance.Low, string.Format("{0} {1}", p.StartInfo.FileName, p.StartInfo.Arguments));
                         if (p.HasExited)
                         {
@@ -55,6 +60,8 @@ namespace BuildTask.Flex
                         }
                     }
                 }
+
+                outputedFiles = outputedFileList.ToArray();
 
                 Log.LogMessage(MessageImportance.High, "Flex Project built successfully");
                 
@@ -82,6 +89,16 @@ namespace BuildTask.Flex
         {
             get { return outputFile; }
             set { outputFile = value; }
+        }
+
+        private string[] outputedFiles;
+        [Output]
+        public string[] OutputedFiles
+        {
+            get
+            {
+                return outputedFiles;
+            }
         }
 
         [Required]

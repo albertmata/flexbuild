@@ -10,7 +10,7 @@ namespace BuildTask.Flex.builders
 {
     public class FlexBuilder : IBuild
     {
-        public Process Build(EclipseFlexProject project, SwfMetaData metadata, bool debug, string outputFile)
+        public Process Build(EclipseFlexProject project, SwfMetaData metadata, bool debug, string outputFile, out string finalOutputFile)
         {
             FlexPropertiesBase flexLibProp = project.FlexProperties;
             ActionScriptProperties actionScriptProperties = project.ActionScriptProperties;
@@ -34,6 +34,8 @@ namespace BuildTask.Flex.builders
                     outputFile = outputFile.Replace("bin-debug", "bin-release");
                 }
             }
+
+            finalOutputFile = outputFile;
             
             cfgBuilder.BuildConfigFile(pathToXmlConfigFile,flexLibProp, actionScriptProperties, metadata, debug, outputFile);
 
