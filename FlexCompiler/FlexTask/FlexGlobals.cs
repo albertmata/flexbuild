@@ -10,7 +10,7 @@ namespace BuildTask.Flex
         public static string FlexSdkPath = @"C:\Flex3SDK";
         //public static string FlexSdkPath = @"C:\Archivos de Programa\Adobe\Flex Builder 3 Plug-in\sdks\3.0.0";
         public static string JavaHome = @"C:\Archivos de Programa\Java\jre1.6.0_07";
-        public static int CompileTimeout = 60000;
+        public static int CompileTimeout = 90000;
 
         public static string FlexFrameworkPath
         {

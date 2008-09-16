@@ -24,6 +24,13 @@ namespace BuildTask.Flex
                 Log.LogMessage(MessageImportance.Normal, "Determining build order");
                 
                 EclipseFlexProject[] orderedProjects = wkspace.GetBuildOrder();
+                
+                Log.LogMessage(MessageImportance.High, "Projects will be built in this order:");
+                for (int i = 0; i < orderedProjects.Length;i++ )
+                {
+                    Log.LogMessage(MessageImportance.High, "[{0}] - {1}", i+1, orderedProjects[i].ProjectName);
+                }
+
                 SwfMetaData metadata = new SwfMetaData();
                 metadata.creator = MetadataCreator;
                 metadata.date = DateTime.Now.ToShortDateString();
@@ -39,13 +46,13 @@ namespace BuildTask.Flex
                     EclipseFlexProject project = orderedProjects[i];
                     
                     IBuild flexBuilder = FlexBuilderFactory.GetBuilderFromProject(project);
-                    Log.LogMessage(MessageImportance.Normal, "Building project {0} to {1}", project.ProjectName, project.ProjectOutputPath);
+                    Log.LogMessage(MessageImportance.High, "Building project {0} to {1}", project.ProjectName, project.ProjectOutputPath);
 
                     using (Process p = flexBuilder.Build(project, metadata, Configurations.Debug == configuration, OutputFile, out finalOutput))
                     {
                         p.WaitForExit(FlexGlobals.CompileTimeout);
                         outputedFileList.Add(finalOutput);
-                        Log.LogCommandLine(MessageImportance.Low, string.Format("{0} {1}", p.StartInfo.FileName, p.StartInfo.Arguments));
+                        Log.LogCommandLine(MessageImportance.High, string.Format("{0} {1}", p.StartInfo.FileName, p.StartInfo.Arguments));
                         if (p.HasExited)
                         {
                             if (p.ExitCode == 0)
@@ -57,6 +64,12 @@ namespace BuildTask.Flex
                                 Log.LogError(p.StandardError.ReadToEnd());
                                 return false;
                             }
+                        }
+                        else
+                        {
+                            p.Kill();
+                            Log.LogError(p.StandardError.ReadToEnd());
+                            return false;
                         }
                     }
                 }
