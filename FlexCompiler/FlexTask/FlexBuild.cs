@@ -48,7 +48,7 @@ namespace BuildTask.Flex
                     IBuild flexBuilder = FlexBuilderFactory.GetBuilderFromProject(project);
                     Log.LogMessage(MessageImportance.High, "Building project {0} to {1}", project.ProjectName, project.ProjectOutputPath);
 
-                    using (Process p = flexBuilder.Build(project, metadata, Configurations.Debug == configuration, OutputFile, out finalOutput))
+                    using (Process p = flexBuilder.Build(project, metadata, Configurations.Debug == configuration, EnableWarnings, OutputFile, out finalOutput))
                     {
                         p.WaitForExit(FlexGlobals.CompileTimeout);
                         outputedFileList.Add(finalOutput);
@@ -131,13 +131,21 @@ namespace BuildTask.Flex
         }
 
 
-        private Configurations configuration;
+        private Configurations configuration = Configurations.Debug;
         [Required]
         [MonitoringDescription("Configuration (Debug or Release) mode in which we want to build")]
         public string Configuration
         {
             get { return configuration.ToString(); }
             set { configuration = (Configurations)Enum.Parse(typeof(Configurations),value); }
+        }
+
+        private bool enableWarnings = false;
+        [MonitoringDescription("Enable strict warning mode")]
+        public bool EnableWarnings
+        {
+            get { return enableWarnings; }
+            set { enableWarnings = value; }
         }
 
         private string metadataCreator;

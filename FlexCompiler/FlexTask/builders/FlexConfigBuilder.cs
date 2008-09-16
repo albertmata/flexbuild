@@ -10,7 +10,7 @@ namespace BuildTask.Flex.builders
 {
     public class FlexConfigBuilder
     {
-        public void BuildConfigFile(string pathToXmlConfigFile, FlexPropertiesBase flexLibProp,  ActionScriptProperties actionScriptProperties, SwfMetaData metadata, bool debug, string outputFile)
+        public void BuildConfigFile(string pathToXmlConfigFile, FlexPropertiesBase flexLibProp,  ActionScriptProperties actionScriptProperties, SwfMetaData metadata, bool debug, bool enableWarnings, string outputFile)
         {
             using (XmlTextWriter writer = new XmlTextWriter(pathToXmlConfigFile, Encoding.ASCII))
             {
@@ -34,6 +34,7 @@ namespace BuildTask.Flex.builders
 
                 //Target player
                 writer.WriteElementString("target-player", actionScriptProperties.PlayerVersion);
+                writer.WriteElementString("warnings", enableWarnings.ToString().ToLowerInvariant());
 
                 //Metadata
                 WriteMetadata(writer, metadata);
