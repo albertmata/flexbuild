@@ -126,8 +126,8 @@ namespace BuildTask.Flex
         [MonitoringDescription("Path to the Java home folder")]
         public string JavaHome
         {
-            get { return FlexGlobals.FlexSdkPath; }
-            set { FlexGlobals.FlexSdkPath = value; }
+            get { return FlexGlobals.JavaHome; }
+            set { FlexGlobals.JavaHome = value; }
         }
 
 
