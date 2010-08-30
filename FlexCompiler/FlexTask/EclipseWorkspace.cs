@@ -12,13 +12,29 @@ namespace BuildTask.Flex
         private const string pathToProjects = ".metadata/.plugins/org.eclipse.core.resources/.projects";
         private string pathToWorkspace;
 
+        private string projectBaseDir;
+        private string newBaseDir;
+        private bool replacePaths;
+
         private Dictionary<string, EclipseFlexProject> projectsByName;
 
         public string PathToWorkspace
         {
             get { return pathToWorkspace; }
         }
-
+        public string ProjectBaseDir
+        {
+            get { return projectBaseDir; }
+        }
+        public string NewBaseDir
+        {
+            get { return newBaseDir; }
+        }
+        public bool ReplacePaths
+        {
+            get { return replacePaths; }
+        }
+        
         private List<EclipseFlexProject> projects;
 
         private EclipseFlexProject mainProject;
@@ -28,12 +44,18 @@ namespace BuildTask.Flex
             projects = new List<EclipseFlexProject>(0);
             pathToWorkspace = string.Empty;
             projectsByName = new Dictionary<string, EclipseFlexProject>();
+            projectBaseDir = string.Empty;
+            newBaseDir = string.Empty;
+            replacePaths = false;
         }
 
-        public EclipseWorkspace(string path)
+        public EclipseWorkspace(string path, string projectBaseDir, string newBaseDir, bool replacePaths)
             : this()
         {
             pathToWorkspace = path;
+            this.replacePaths = replacePaths;
+            this.projectBaseDir = projectBaseDir;
+            this.newBaseDir = newBaseDir;
         }
 
         public void LoadWorkspace()
@@ -52,8 +74,9 @@ namespace BuildTask.Flex
 
             foreach (string dir in dirs)
             {
+                if(dir.EndsWith(".svn")) continue;
                 string dirName = Path.GetFileName(dir);
-                EclipseFlexProject project = EclipseFlexProjectFactory.CreateProjectFromWorkspaceMetadata(dir, Path.Combine(pathToWorkspace, dirName));
+                EclipseFlexProject project = EclipseFlexProjectFactory.CreateProjectFromWorkspaceMetadata(dir, Path.Combine(pathToWorkspace, dirName),this.projectBaseDir, this.newBaseDir, this.replacePaths);
                 projects.Add(project);
                 projectsByName.Add(project.ProjectName, project);
             }

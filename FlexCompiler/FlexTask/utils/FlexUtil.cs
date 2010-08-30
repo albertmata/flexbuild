@@ -10,5 +10,9 @@ namespace BuildTask.Flex.utils
         {
             return path.Replace("\\\\", "/").Replace("\\", "/");
         }
+        public static string UnNormalizePath(string path)
+        {
+            return path.Replace("/", "\\\\").Replace("/", "\\");
+        }
     }
 }

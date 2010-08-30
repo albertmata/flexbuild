@@ -99,7 +99,7 @@ namespace BuildTask.Flex
         public ActionScriptProperties(string pathToProject, EclipseWorkspace wkspace)
         {
             path = pathToProject;
-            using (ActionScriptPropertiesReader reader = new ActionScriptPropertiesReader(path, wkspace))
+            using (ActionScriptPropertiesReader reader = new ActionScriptPropertiesReader(path, wkspace, wkspace.ProjectBaseDir, wkspace.NewBaseDir, wkspace.ReplacePaths))
             {
                 mainApplication = reader.MainApplication;
                 sourceFolderPath = reader.SourceFolderPath;

@@ -45,7 +45,7 @@ namespace BuildTask.Flex.utils
                 }
             }
 
-            return sb.ToString();
+           return sb.ToString();
         }
 
         #region IDisposable Members

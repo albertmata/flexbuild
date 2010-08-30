@@ -7,6 +7,7 @@ using Microsoft.Build.Framework;
 
 using BuildTask.Flex.builders;
 using System.Diagnostics;
+using BuildTask.Flex.utils;
 
 namespace BuildTask.Flex
 {
@@ -16,9 +17,10 @@ namespace BuildTask.Flex
         {
             try
             {
-                Log.LogMessage(MessageImportance.Normal, "Loading workspace");
+                Log.LogMessage(MessageImportance.Normal, "Loading workspace from {0}", WorkSpacePath);
+                Log.LogMessage(MessageImportance.Normal, "Replace base path {0} with {1} is {2}", ProjectsBasePath, NewBasePath, ReplaceProjectPaths?"Activated":"Deactivated");
 
-                EclipseWorkspace wkspace = new EclipseWorkspace(WorkSpacePath);
+                EclipseWorkspace wkspace = new EclipseWorkspace(WorkSpacePath, FlexUtil.NormalizePath(ProjectsBasePath), FlexUtil.NormalizePath(NewBasePath), ReplaceProjectPaths);
                 wkspace.LoadWorkspace();
 
                 Log.LogMessage(MessageImportance.Normal, "Determining build order");
@@ -40,6 +42,8 @@ namespace BuildTask.Flex
                 
                 string finalOutput;
                 List<string> outputedFileList = new List<string>();
+
+                Log.LogMessage(MessageImportance.Normal, "Java bin path is {0}", FlexGlobals.JavaBin);
 
                 for (int i = 0; i < orderedProjects.Length; i++)
                 {
@@ -82,7 +86,13 @@ namespace BuildTask.Flex
             }
             catch (Exception ex)
             {
-                this.Log.LogErrorFromException(ex, true);
+                Exception theEx = ex;
+                do
+                {
+                    this.Log.LogErrorFromException(theEx, true);
+                    theEx = theEx.InnerException;
+                } 
+                while (theEx != null);
                 return false;
             }
         }
@@ -178,6 +188,30 @@ namespace BuildTask.Flex
         {
             get { return metadataDescription; }
             set { metadataDescription = value; }
+        }
+
+        private string projectsBasePath;
+        [MonitoringDescription("Path to the base projects folder")]
+        public string ProjectsBasePath
+        {
+            get { return projectsBasePath; }
+            set { projectsBasePath = value; }
+        }
+
+        private string newBasePath;
+        [MonitoringDescription("Path to the new base projects folder")]
+        public string NewBasePath
+        {
+            get { return newBasePath; }
+            set { newBasePath = value; }
+        }
+
+        private bool replaceProjectPaths;
+        [MonitoringDescription("Enable replace of projectsBasePath with newBasePath. Eclipse project paths stored in .location files are absolute.")]
+        public bool ReplaceProjectPaths
+        {
+            get { return replaceProjectPaths; }
+            set { replaceProjectPaths = value; }
         }
     }
 }

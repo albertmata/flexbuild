@@ -59,7 +59,13 @@ namespace BuildTask.Flex
             {
                 string linkedResource = this.GetResourceByName(ActionScriptProperties.OutputFolderPath);
                 if (null != linkedResource)
+                {
+                    if (replacePaths)
+                    {
+                        linkedResource = linkedResource.Replace(projectBasePath, newBasePath);
+                    }
                     return linkedResource;
+                }
                 else
                     return Path.Combine(ActionScriptProperties.OutputFolderLocation, ActionScriptProperties.OutputFolderPath);
             }
@@ -85,6 +91,10 @@ namespace BuildTask.Flex
             }
         }
 
+        private string projectBasePath;
+        private string newBasePath;
+        private bool replacePaths;
+
         private EclipseFlexProject()
         {
             dependencies = new List<EclipseFlexProject>(0);
@@ -92,14 +102,28 @@ namespace BuildTask.Flex
             flexProperties = new FlexLibProperties();
         }
 
-        public EclipseFlexProject(string path):this()
+        public EclipseFlexProject(string path, string projectBasePath, string newBasePath, bool replacePaths):this()
         {
             projectPath = path;
-            using (ProjectReader reader = new ProjectReader(path))
+            this.projectBasePath = projectBasePath;
+            this.newBasePath = newBasePath;
+            this.replacePaths = replacePaths;
+            if (replacePaths)
             {
-                projectName = reader.ProjectName;
-                projectType = reader.ProjectType;
-                linkedResources = reader.LinkedResources;
+                projectPath = projectPath.Replace(projectBasePath, newBasePath);
+            }
+            try
+            {
+                using (ProjectReader reader = new ProjectReader(projectPath))
+                {
+                    projectName = reader.ProjectName;
+                    projectType = reader.ProjectType;
+                    linkedResources = reader.LinkedResources;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("Error reading from {0}",projectPath), ex);
             }
         }
 

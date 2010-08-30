@@ -12,17 +12,23 @@ namespace BuildTask.Flex.utils
 
         private const string frameWorkVar = "${PROJECT_FRAMEWORKS}";
         private string path;
+        private string projectsBasePath;
+        private string newBasePath;
+        private bool replacePaths;
 
         private XmlDocument doc;
 
         private EclipseWorkspace workSpace;
 
-        public ActionScriptPropertiesReader(string pathToProject, EclipseWorkspace workspace)
+        public ActionScriptPropertiesReader(string pathToProject, EclipseWorkspace workspace, string projectBaseDir, string newBaseDir, bool replacePaths)
         {
             workSpace = workspace;
             path = Path.Combine(pathToProject, actionScriptFilename);
             doc = new XmlDocument();
             doc.Load(path);
+            projectsBasePath = projectBaseDir;
+            newBasePath = newBaseDir;
+            this.replacePaths = replacePaths;
         }
 
         public string MainApplication
@@ -72,7 +78,12 @@ namespace BuildTask.Flex.utils
         {
             get
             {
-                return GetCompilerAttribute("outputFolderLocation");
+                path = GetCompilerAttribute("outputFolderLocation");
+                if (replacePaths)
+                {
+                    path = path.Replace(projectsBasePath, newBasePath);
+                }
+                return path;
             }
         }
 
@@ -169,6 +180,10 @@ namespace BuildTask.Flex.utils
 
             string path = libraryPathEntryNode.Attributes["path"].Value;
             path = path.Replace(frameWorkVar, FlexGlobals.FlexFrameworkPath);
+            if (replacePaths)
+            {
+                path = path.Replace(projectsBasePath, newBasePath);
+            }
 
             switch (kind)
             {
