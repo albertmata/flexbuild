@@ -10,7 +10,7 @@ namespace BuildTask.Flex.builders
 {
     public class FlexBuilder : IBuild
     {
-        public Process Build(EclipseFlexProject project, SwfMetaData metadata, bool debug, bool enableWarnings, string outputFile, out string finalOutputFile)
+        public Process Build(EclipseFlexProject project, SwfMetaData metadata, LicenseProperties license, bool debug, bool enableWarnings, string outputFile, out string finalOutputFile)
         {
             FlexPropertiesBase flexLibProp = project.FlexProperties;
             ActionScriptProperties actionScriptProperties = project.ActionScriptProperties;
@@ -37,7 +37,7 @@ namespace BuildTask.Flex.builders
 
             finalOutputFile = outputFile;
 
-            cfgBuilder.BuildConfigFile(pathToXmlConfigFile, flexLibProp, actionScriptProperties, metadata, debug, enableWarnings, outputFile);
+            cfgBuilder.BuildConfigFile(pathToXmlConfigFile, flexLibProp, actionScriptProperties, metadata, license, debug, enableWarnings, outputFile);
 
             string pathToMainApp = FlexUtil.NormalizePath(Path.Combine(project.ProjectPath, actionScriptProperties.MainApplication));
 

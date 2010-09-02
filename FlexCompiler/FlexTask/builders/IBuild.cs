@@ -7,6 +7,6 @@ namespace BuildTask.Flex.builders
 {
     public interface IBuild
     {
-        Process Build(EclipseFlexProject project, SwfMetaData metadata, bool debug, bool enableWarnings, string outputFile, out string finalOutputFile);
+        Process Build(EclipseFlexProject project, SwfMetaData metadata, LicenseProperties license, bool debug, bool enableWarnings, string outputFile, out string finalOutputFile);
     }
 }

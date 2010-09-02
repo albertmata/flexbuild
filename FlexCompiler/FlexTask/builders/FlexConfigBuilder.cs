@@ -10,7 +10,9 @@ namespace BuildTask.Flex.builders
 {
     public class FlexConfigBuilder
     {
-        public void BuildConfigFile(string pathToXmlConfigFile, FlexPropertiesBase flexLibProp,  ActionScriptProperties actionScriptProperties, SwfMetaData metadata, bool debug, bool enableWarnings, string outputFile)
+        public void BuildConfigFile(string pathToXmlConfigFile, FlexPropertiesBase flexLibProp,  
+            ActionScriptProperties actionScriptProperties, SwfMetaData metadata, LicenseProperties license,
+            bool debug, bool enableWarnings, string outputFile)
         {
             using (XmlTextWriter writer = new XmlTextWriter(pathToXmlConfigFile, Encoding.ASCII))
             {
@@ -38,6 +40,9 @@ namespace BuildTask.Flex.builders
 
                 //Metadata
                 WriteMetadata(writer, metadata);
+
+                //License
+                WriteLicense(writer, license.ProductName, license.SerialNumber);
 
                 writer.WriteEndElement();
 
@@ -123,6 +128,16 @@ namespace BuildTask.Flex.builders
                 }
                 writer.WriteEndElement();
             }
+        }
+
+        private void WriteLicense(XmlTextWriter writer, string product, string serial)
+        {
+            writer.WriteStartElement("licenses");
+            writer.WriteStartElement("license");
+            writer.WriteElementString("product", product);
+            writer.WriteElementString("serial-number", serial);
+            writer.WriteEndElement();
+            writer.WriteEndElement();
         }
     }
 }

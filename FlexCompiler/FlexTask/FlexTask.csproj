@@ -42,6 +42,7 @@
     <Compile Include="builders\FlexBuilder.cs" />
     <Compile Include="builders\FlexBuilderFactory.cs" />
     <Compile Include="builders\FlexConfigBuilder.cs" />
+    <Compile Include="builders\LicenseProperties.cs" />
     <Compile Include="builders\SwfMetaData.cs" />
     <Compile Include="Configurations.cs" />
     <Compile Include="EclipseFlexProject.cs" />

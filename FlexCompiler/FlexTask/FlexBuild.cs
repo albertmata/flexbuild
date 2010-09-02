@@ -39,7 +39,9 @@ namespace BuildTask.Flex
                 metadata.description = MetadataDescription;
                 metadata.publisher = MetadataPublisher;
                 metadata.title = MetadataTitle;
-                
+
+                LicenseProperties license = new LicenseProperties(LicenseProductName, LicenseSerial);
+
                 string finalOutput;
                 List<string> outputedFileList = new List<string>();
 
@@ -52,7 +54,7 @@ namespace BuildTask.Flex
                     IBuild flexBuilder = FlexBuilderFactory.GetBuilderFromProject(project);
                     Log.LogMessage(MessageImportance.High, "Building project {0} to {1}", project.ProjectName, project.ProjectOutputPath);
 
-                    using (Process p = flexBuilder.Build(project, metadata, Configurations.Debug == configuration, EnableWarnings, OutputFile, out finalOutput))
+                    using (Process p = flexBuilder.Build(project, metadata, license, Configurations.Debug == configuration, EnableWarnings, OutputFile, out finalOutput))
                     {
                         p.WaitForExit(FlexGlobals.CompileTimeout);
                         outputedFileList.Add(finalOutput);
@@ -190,7 +192,7 @@ namespace BuildTask.Flex
             set { metadataDescription = value; }
         }
 
-        private string projectsBasePath;
+        private string projectsBasePath = String.Empty;
         [MonitoringDescription("Path to the base projects folder")]
         public string ProjectsBasePath
         {
@@ -198,7 +200,7 @@ namespace BuildTask.Flex
             set { projectsBasePath = value; }
         }
 
-        private string newBasePath;
+        private string newBasePath = String.Empty;
         [MonitoringDescription("Path to the new base projects folder")]
         public string NewBasePath
         {
@@ -212,6 +214,23 @@ namespace BuildTask.Flex
         {
             get { return replaceProjectPaths; }
             set { replaceProjectPaths = value; }
+        }
+
+        private string licenseProductName = "flexbuilder3";
+        [MonitoringDescription("ProductName for the license, normally flexbuilder3, do not touch if not necessary")]
+        public string LicenseProductName
+        {
+            get { return licenseProductName; }
+            set { licenseProductName = value; }
+        }
+
+        private string licenseSerial;
+        [Required]
+        [MonitoringDescription("Serial Number for the license")]
+        public string LicenseSerial
+        {
+            get { return licenseSerial; }
+            set { licenseSerial = value; }
         }
     }
 }
